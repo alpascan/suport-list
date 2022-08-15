@@ -41,9 +41,10 @@ def main():
                     help='Date until you want the list to be generated: Must be in format DD/MM/YYYY')
 
     args = parser.parse_args()
-    values = ["A", "B", "C", "D"] if not args.names else args.names
+    if not args.names:
+        raise ValueError("You need to provide a list of names")
+    values = args.names
     to_date = date(year=date.today().year, month=12, day=31) if not args.date else args.date
-    print(args.date)
     dict_str = '\n'.join([f"{k}: {v}" for k, v in generate_dict(values, to_date).items()])
     print(dict_str)
     with open('round_robin.txt', 'w') as f:
