@@ -29,17 +29,21 @@ def generate_dict(values, to_date=date(year=date.today().year, month=12, day=31)
 
     return dct
 
+def convert_date(d):
+    return  datetime.strptime(d, '%d/%m/%Y').date()
+
 
 def main():
     parser = argparse.ArgumentParser(description="Small script to randomize team members assigned to support")
     parser.add_argument('--names', type=str, nargs='+',
                         help='List of names to generate. Separated by space')
-    parser.add_argument('--date', type=str,
+    parser.add_argument('--date', type=convert_date,
                     help='Date until you want the list to be generated: Must be in format DD/MM/YYYY')
 
     args = parser.parse_args()
     values = ["A", "B", "C", "D"] if not args.names else args.names
-    to_date = date(year=2022, month=12, day=31) if not hasattr(args,'date') else datetime.strptime(args.date, '%d/%m/%Y').date()
+    to_date = date(year=date.today().year, month=12, day=31) if not args.date else args.date
+    print(args.date)
     dict_str = '\n'.join([f"{k}: {v}" for k, v in generate_dict(values, to_date).items()])
     print(dict_str)
     with open('round_robin.txt', 'w') as f:
