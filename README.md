@@ -4,7 +4,11 @@ Script to generate a support map until the end of the year:
 ## Usage
 To run the script, run the following command:
 
-    python3 main.py --names <names> --date DD/MM/YYYY
+    python3 main.py --names <names> --date DD/MM/YYYY --previous_names <names> 
+or 
+    python3 main.py --names <names> --date DD/MM/YYYY --previous_names_file <file> 
+
+
 
 Where:
 * **--names** argument is a list of names that will be generated for the round robin
