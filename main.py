@@ -39,7 +39,7 @@ def convert_date(d):
 def get_reverse_sublist_until_repeat(l):
     unique_l = []
     for i in l:
-        if i in unique_l:
+        if i in unique_l.reverse():
             return l
         else:
             unique_l.append(i)
@@ -78,13 +78,12 @@ def main():
     args = parser.parse_args()
     if not args.names:
         raise ValueError("You need to provide a list of names")
-    previous_names = None
-    if args.previous_names:
-        if [name for name in args.previous_names if name not in args.names]:
-            raise ValueError(f"{args.previous_names=} not inclusive in {args.names=}")
-        previous_names = args.previous_names
-    if args.previous_names_file:
+    if args.previous_names :
+        previous_names = [name for name in args.previous_names if name in args.names] 
+    elif args.previous_names_file:
         previous_names = deserialise_file(args.previous_file_name)
+    else:
+        previous_names = None
     to_date = (
         date(year=date.today().year, month=12, day=31) if not args.date else args.date
     )
